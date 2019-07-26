@@ -11,8 +11,8 @@
 ![Image text](image/WX20190726-000533@2x.png)  
 ![Image text](image/1564070774503.jpg)  
 #### 
-#### master 安装docker-ce  
-官方安装地址教程地址：https://docs.docker.com/install/linux/docker-ce/centos/  
+#### 所有服务器安装最新docker-ce  
+官方安装方法：https://docs.docker.com/install/linux/docker-ce/centos/  
     
      
 
