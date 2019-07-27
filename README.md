@@ -20,3 +20,8 @@
 192.168.0.107  node2  
 
 #### （四）安装etcd 到master服务器
+下载文件：https://github.com/etcd-io/etcd/releases etcd-v3.3.13-linux-amd64.tar 
+解压命令 tar -xvf etcd-v3.3.13-linux-amd64.tar
+跳转到目录 cd etcd-v3.3.13-linux-amd64  
+拷贝文件 cp etcd /usr/local/sbin/  
+拷贝文件 cp etcdctl /usr/local/sbin/  
