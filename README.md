@@ -15,16 +15,16 @@
 yum -y install epel-release  
 yum update  
 
-####master 执行命令  
+#### master 执行命令  
 yum install -y etcd kubernetes-master ntp flannel  
-####node 执行命令  
+#### node 执行命令  
 yum install -y kubernetes-node ntp flannel docker  
-####时间设定所有服务器  
+#### 时间设定所有服务器  
 systemctl start ntpd  
 systemctl enable ntpd  
 ntpdate ntp1.aliyun.com  
 hwclock -w  
-####设置etcd  
+#### 设置etcd  
 vi /etc/etcd/etcd.conf  
 ETCD_LISTEN_CLIENT_URLS="http://localhost:2379,http://master:2379"  
 ETCD_ADVERTISE_CLIENT_URLS="http://master:2379"  
