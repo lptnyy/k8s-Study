@@ -5,7 +5,7 @@
     192.168.0.106  node1 centos7    
     192.168.0.107  node2 centos7  
  
-##（二）所有服务器编辑 /etc/hosts  
+## （二）所有服务器编辑 /etc/hosts  
 192.168.0.105  master  
 192.168.0.106  node1   
 192.168.0.107  node2   
