@@ -57,7 +57,7 @@
      KUBE_SCHEDULER_ARGS="--address=0.0.0.0" 
      
      vi /etc/sysconfig/flanneld  
-     FLANNEL_ETCD_ENDPOINTS="http://192.168.0.105:2379"  
+     FLANNEL_ETCD_ENDPOINTS="http://master:2379"  
      FLANNEL_ETCD_PREFIX="/atomic.io/network"  
      
      etcd里追加 flanneld 网络配置  
