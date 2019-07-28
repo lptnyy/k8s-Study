@@ -11,8 +11,8 @@
     命令 hostnamectl set-hostname node1   
     命令 hostnamectl set-hostname node2  
     所有服务器 /etc/hosts 添加以下内容  
-    192.168.0.105  master    
-    192.168.0.106  node1     
+    192.168.0.105  master localhost  (localhost 只需要105 配置) 
+    192.168.0.106  node1 
     192.168.0.107  node2  
 
 ## （三）安装  
@@ -48,7 +48,7 @@
      KUBE_MASTER="--master=http://192.168.0.105:8080"  
      
      vi /etc/kubernetes/apiserver  
-     UBE_API_ADDRESS="--insecure-bind-address=127.0.0.1"  
+     UBE_API_ADDRESS="--insecure-bind-address=192.168.0.105" master 节点ip  
      UBE_ETCD_SERVERS="--etcd-servers=http://master:2379"  
      KUBE_ADMISSION_CONTROL="--admission-control=NamespaceLifecycle,NamespaceExists,LimitRanger,SecurityContextDeny,ServiceAccount,ResourceQuota"  
      UBE_API_ARGS=""  
@@ -64,7 +64,29 @@
      etcdctl set /atomic.io/network/config '{"Network": "172.16.0.0/16"}'
      
      启动服务   
-     for i in  kube-apiserver kube-controller-manager kube-scheduler flanneld;do systemctl restart $i; systemctl enable $i;done
+     for i in  kube-apiserver kube-controller-manager kube-scheduler flanneld;do systemctl restart $i; systemctl enable $i; ;systemctl status $i ; done
 
      
- 
+#### 配置node k8s 服务 所有node 节点服务器
+     vi /etc/sysconfig/flanneld   
+     FLANNEL_ETCD_ENDPOINTS="http://master:2379"  
+     FLANNEL_ETCD_PREFIX="/atomic.io/network"  
+     
+     vi  /etc/kubernetes/config 
+     KUBE_LOGTOSTDERR="--logtostderr=true"  
+     KUBE_LOG_LEVEL="--v=0"  
+     KUBE_ALLOW_PRIV="--allow-privileged=false"  
+     KUBE_MASTER="--master=http://master:8080"  
+     
+     vi /etc/kubernetes/proxy  
+     KUBE_PROXY_ARGS="--bind=address=0.0.0.0"  
+     
+     vi /etc/kubernetes/kubelet  
+     KUBELET_ADDRESS="--address=127.0.0.1"
+     KUBELET_HOSTNAME="--hostname-override=192.168.0.106"  这里配置 每一个node节点服务器分配的Ip  
+     KUBELET_API_SERVER="--api-servers=http://master:8080"
+     KUBELET_POD_INFRA_CONTAINER="--pod-infra-container-image=registry.access.redhat.com/rhel7/pod-infrastructure:latest"
+     KUBELET_ARGS=""  
+     
+     启动服务
+     for i in flanneld kube-proxy kubelet docker;do systemctl restart $i;systemctl enable $i;systemctl status $i ;done  
