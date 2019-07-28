@@ -90,3 +90,10 @@
      
      启动服务
      for i in flanneld kube-proxy kubelet docker;do systemctl restart $i;systemctl enable $i;systemctl status $i ;done  
+     
+ ### 验证集群结果
+    root@master ~]# kubectl get nodes
+    NAME            STATUS    AGE
+    192.168.0.106   Ready     17m
+    192.168.0.107   Ready     4s
+    [root@master ~]# 
